@@ -19,7 +19,9 @@ def canUnlockAll(boxes):
 
     for index, box in enumerate(boxes):
         for key in box:
-            if key < number_of_boxes and key not in opened_boxes and key != index:
+            if (key < number_of_boxes and
+                    key not in opened_boxes and
+                    key != index):
                 opened_boxes.append(key)
 
         if len(opened_boxes) == number_of_boxes:
