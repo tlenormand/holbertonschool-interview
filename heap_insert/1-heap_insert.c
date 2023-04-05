@@ -3,71 +3,30 @@
 
 
 /**
-* heap_insert - inserts a value into a Max Binary Heap
-* @root: double pointer to the root node of the Heap
-* @value: value store in the node to be inserted
-* Return: pointer to the inserted node, or NULL on failure
-*/
-
-heap_t *heap_insert(heap_t **root, int value)
-{
-	heap_t *new_node = NULL;
-	heap_t *parent = NULL;
-
-	if (root == NULL)
-		return (NULL);
-
-	new_node = binary_tree_node(NULL, value);
-	if (new_node == NULL)
-		return (NULL);
-
-	if (*root == NULL)
-		return (*root = new_node);
-
-	parent = find_parent(*root);
-	if (parent->left == NULL)
-		parent->left = new_node;
-	else
-		parent->right = new_node;
-
-	new_node->parent = parent;
-
-	while (new_node->parent != NULL && new_node->n > new_node->parent->n)
-	{
-		swap_nodes(new_node, new_node->parent);
-		new_node = new_node->parent;
-	}
-
-	return (new_node);
-}
-
-
-/**
 * find_parent - finds the parent node of the next node to be inserted
 * @root: pointer to the root node of the Heap
+* @height: height of the tree
 * Return: pointer to the parent node
 */
 
-heap_t *find_parent(heap_t *root)
+heap_t *find_parent(heap_t *root, int height)
 {
-	heap_t *parent = NULL;
-	heap_t *head = NULL;
-	heap_t *temp = NULL;
+	heap_t *parent = root;
 
-	if (root == NULL)
+	if (root == NULL || height < 2)
 		return (NULL);
 
-	head = root;
-	while (head != NULL)
+	if (height == 2)
 	{
-		if (head->left == NULL || head->right == NULL)
-			return (head);
-
-		temp = head->left;
-		head->left = head->right;
-		head->right = temp;
-		head = head->left;
+		if (root->left == NULL || root->right == NULL)
+			return (root);
+		else
+			return (NULL);
 	}
+
+	parent = find_parent(root->left, height - 1);
+	if (parent == NULL)
+		parent = find_parent(root->right, height - 1);
 
 	return (parent);
 }
@@ -89,4 +48,77 @@ void swap_nodes(heap_t *node1, heap_t *node2)
 	temp = node1->n;
 	node1->n = node2->n;
 	node2->n = temp;
+}
+
+
+/**
+* height_tree - measures the height of a binary tree
+* @tree: pointer to the root node of the tree to measure the height
+* Return: height of the tree
+*/
+
+int height_tree(const binary_tree_t *tree)
+{
+	int left_height = 0;
+	int right_height = 0;
+
+	if (tree == NULL)
+		return (0);
+
+	left_height = height_tree(tree->left);
+	right_height = height_tree(tree->right);
+
+	if (left_height > right_height)
+		return (left_height + 1);
+	else
+		return (right_height + 1);
+}
+
+
+/**
+* heap_insert - inserts a value into a Max Binary Heap
+* @root: double pointer to the root node of the Heap
+* @value: value store in the node to be inserted
+* Return: pointer to the inserted node, or NULL on failure
+*/
+
+heap_t *heap_insert(heap_t **root, int value)
+{
+	heap_t *new_node = NULL;
+	heap_t *parent = NULL;
+	heap_t *move = *root;
+	int height = height_tree(*root);
+
+	if (root == NULL)
+		return (NULL);
+
+	new_node = binary_tree_node(NULL, value);
+	if (new_node == NULL)
+		return (NULL);
+
+	if (*root == NULL)
+		return (*root = new_node);
+
+	parent = find_parent(*root, height);
+	if (parent == NULL)
+	{
+		while (move->left != NULL)
+			move = move->left;
+		parent = move;
+	}
+
+	if (parent->left == NULL)
+		parent->left = new_node;
+	else
+		parent->right = new_node;
+
+	new_node->parent = parent;
+
+	while (new_node->parent != NULL && new_node->n > new_node->parent->n)
+	{
+		swap_nodes(new_node, new_node->parent);
+		new_node = new_node->parent;
+	}
+
+	return (new_node);
 }
