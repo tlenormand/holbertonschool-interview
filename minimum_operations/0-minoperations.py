@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """ Minimum Operations """
 
+import numpy as np
+
+
 def minOperations(n):
     """ Calculates the fewest number of operations needed to result in exactly
         n H characters in the file
@@ -15,18 +18,12 @@ def minOperations(n):
     if not isinstance(n, int) or n < 2:
         return 0
 
-    operations = 0
+    factors = []
+    for i in range(2, int(np.sqrt(n))+1):
+        while n % i == 0:
+            factors.append(i)
+            n //= i
+    if n > 1:
+        factors.append(n)
 
-    biggest_mod = 0
-    result_biggest_mod = 0
-
-    for i in reversed(range(1, n)):
-        if n % i == 0:
-            biggest_mod = i
-            result_biggest_mod = n // i
-            n = biggest_mod
-            break
-
-    operations += result_biggest_mod
-
-    return operations + minOperations(n)
+    return np.sum(factors)
