@@ -8,9 +8,11 @@
  */
 static void print_grid(int grid[3][3])
 {
-	for (int i = 0; i < 3; i++)
+	int i, j;
+
+	for (i = 0; i < 3; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (j = 0; j < 3; j++)
 		{
 			if (j)
 				printf(" ");
@@ -27,8 +29,10 @@ static void print_grid(int grid[3][3])
 */
 void distribution(int grid1[3][3], int grid2[3][3])
 {
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
+	int i, j;
+
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 3; j++)
 			if (grid1[i][j] > 3)
 			{
 				if (i > 0)
@@ -54,8 +58,10 @@ void distribution(int grid1[3][3], int grid2[3][3])
 */
 int is_stable(int grid[3][3])
 {
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
+	int i, j;
+
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 3; j++)
 			if (grid[i][j] > 3)
 				return (-1);
 
@@ -69,7 +75,9 @@ int is_stable(int grid[3][3])
 */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-	for (int i = 0; i < 3; i++)
+	int i;
+
+	for (i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
 		{
 			grid1[i][j] += grid2[i][j];
