@@ -23,8 +23,8 @@ int listint_len(listint_t *head)
  */
 int is_palindrome(listint_t **head)
 {
-	int i = 0;
-	const size_t length = listint_len(*head);
+	size_t i = 0;
+	size_t length = listint_len(*head);
 	listint_t *current = *head;
 
 	int array[length];
@@ -36,9 +36,9 @@ int is_palindrome(listint_t **head)
 		i++;
 	}
 
-	for (i = 0; i < listint_len(*head); i++)
+	for (i = 0; i < length; i++)
 	{
-		if (array[i] != array[listint_len(*head) - 1 - i])
+		if (array[i] != array[length - 1 - i])
 			return (0);
 	}
 
