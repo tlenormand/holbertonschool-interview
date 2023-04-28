@@ -24,7 +24,7 @@ int listint_len(listint_t *head)
 int is_palindrome(listint_t **head)
 {
 	int i = 0;
-	const int length = listint_len(*head);
+	const size_t length = listint_len(*head);
 	listint_t *current = *head;
 
 	int array[length];
