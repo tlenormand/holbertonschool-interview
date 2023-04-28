@@ -22,7 +22,7 @@ int listint_len(listint_t *head)
  */
 int is_palindrome(listint_t **head)
 {
-	int i = 0;
+	int i = 0, result = 1;
 	int length = listint_len(*head);
 	listint_t *current = *head;
 
@@ -38,8 +38,9 @@ int is_palindrome(listint_t **head)
 	for (i = 0; i < length; i++)
 	{
 		if (array[i] != array[length - 1 - i])
-			return (0);
+			result = 0;
 	}
 
-	return (1);
+	free(array);
+	return (result);
 }
