@@ -12,10 +12,9 @@
  */
 int is_palindrome_recursive(listint_t *left, listint_t *right)
 {
-	if (right->next)
-		is_palindrome_recursive(left, right->next) ? left = left->next : 0;
-
-	return (left->n == right->n ? 1 : 0);
+	return (right->next) ?
+		(is_palindrome_recursive(left, right->next)) ?
+			(left->n == right->n) ? 1 : 0 : 0 : 0;
 }
 
 
@@ -26,8 +25,5 @@ int is_palindrome_recursive(listint_t *left, listint_t *right)
  */
 int is_palindrome(listint_t **head)
 {
-	if (*head == NULL)
-		return (1);
-
-	return (is_palindrome_recursive(*head, *head));
+	return (head == NULL) ? 1 : is_palindrome_recursive(*head, *head);
 }
