@@ -1,25 +1,20 @@
 #include "lists.h"
 
 
-int is_palindrome_recursive(listint_t *current, int length)
+int listint_len(listint_t *head)
 {
-    listint_t *end = current;
-    int i = length;
+	listint_t *current = head;
+	int i = 0;
 
-    if (length < 2)
-        return (1);
+	while (current != NULL)
+	{
+		current = current->next;
+		i++;
+	}
 
-    while (i != 0)
-    {
-        end = end->next;
-        i--;
-    }
-
-    if (current->n != end->n)
-        return (0);
-
-    return is_palindrome_recursive(current->next, length - 2);
+	return (i);
 }
+
 
 /**
  * is_palindrome - checks if a singly linked list is a palindrome
@@ -28,19 +23,23 @@ int is_palindrome_recursive(listint_t *current, int length)
  */
 int is_palindrome(listint_t **head)
 {
-    listint_t *current, *end;
-    int length;
+	int i = 0;
+	listint_t *current = *head;
 
-    if (head == NULL || *head == NULL)
-        return (1);
+	int array[listint_len(*head)];
 
-    current = *head;
-    end = *head;
-    for (length = 0; end->next != NULL; length++)
-        end = end->next;
+	while (current->next != NULL)
+	{
+		array[i] = current->n;
+		current = current->next;
+		i++;
+	}
 
-    if (length == 1)
-        return (1);
+	for (i = 0; i < listint_len(*head); i++)
+	{
+		if (array[i] != array[listint_len(*head) - 1 - i])
+			return (0);
+	}
 
-    return is_palindrome_recursive(current, length);
+	return (1);
 }
