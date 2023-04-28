@@ -4,14 +4,14 @@
 int listint_len(listint_t *head)
 {
 	listint_t *current = head;
-	int i = 0;
+	size_t i = 0;
 
 	while (current != NULL)
 	{
 		current = current->next;
 		i++;
 	}
-
+	printf("length: %lu\n", i);
 	return (i);
 }
 
@@ -23,13 +23,13 @@ int listint_len(listint_t *head)
  */
 int is_palindrome(listint_t **head)
 {
-	size_t i = 0;
-	size_t length = listint_len(*head);
+	int i = 0;
+	int length = listint_len(*head);
 	listint_t *current = *head;
 
-	int array = malloc(sizeof(int) * length);
+	int *array = (int *)malloc(sizeof(int) * length);
 
-	while (current->next != NULL)
+	while (current != NULL)
 	{
 		array[i] = current->n;
 		current = current->next;
