@@ -11,7 +11,6 @@ int listint_len(listint_t *head)
 		current = current->next;
 		i++;
 	}
-	printf("length: %lu\n", i);
 	return (i);
 }
 
