@@ -24,9 +24,10 @@ int listint_len(listint_t *head)
 int is_palindrome(listint_t **head)
 {
 	int i = 0;
+	int length = listint_len(*head);
 	listint_t *current = *head;
 
-	int array[listint_len(*head)];
+	int array[length];
 
 	while (current->next != NULL)
 	{
