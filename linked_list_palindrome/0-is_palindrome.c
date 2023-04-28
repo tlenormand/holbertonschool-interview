@@ -27,7 +27,7 @@ int is_palindrome(listint_t **head)
 	size_t length = listint_len(*head);
 	listint_t *current = *head;
 
-	int array[length];
+	int array = malloc(sizeof(int) * length);
 
 	while (current->next != NULL)
 	{
