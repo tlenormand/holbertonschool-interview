@@ -31,5 +31,9 @@ int is_palindrome_recursive(listint_t **left, listint_t *right)
  */
 int is_palindrome(listint_t **head)
 {
-	return ((head) ? is_palindrome_recursive(head, *head) : 0);
+	return (
+		(head && *head && (*head)->next) ?
+			is_palindrome_recursive(head, *head)
+			: 1
+	);
 }
