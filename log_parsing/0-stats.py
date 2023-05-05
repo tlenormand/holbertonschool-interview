@@ -26,7 +26,7 @@ def print_stats():
             print("{}: {}".format(key, status[key]))
 
 
-def is_formatted(lime):
+def is_formatted():
     """ Checks if a line is formatted correctly """
     # check the format <IP Address> - [<date>] "GET /projects/260 HTTP/1.1"
     # <status code> <file size>
@@ -64,7 +64,7 @@ if __name__ == "__main__":
             count += 1
 
         split = line.split()
-        if not is_formatted(split):
+        if not is_formatted():
             continue
 
         file_size += int(split[-1])
