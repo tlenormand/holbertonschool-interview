@@ -1,73 +1,49 @@
 #!/usr/bin/python3
-""" Reads stdin line by line and computes metrics """
-
+""" script that reads stdin line by line and computes metrics
+"""
 import sys
 
 
-status = {
-    '200': 0,
-    '301': 0,
-    '400': 0,
-    '401': 0,
-    '403': 0,
-    '404': 0,
-    '405': 0,
-    '500': 0
-}
-file_size = 0
-count = 0
+nb_line_read = 0
+total_size = 0
+status_code_line = 0
+status_code_dict = {200: 0, 301: 0, 400: 0, 401: 0,
+                    403: 0, 404: 0, 405: 0, 500: 0}
 
-
-def print_stats():
-    """ Prints the accumulated statistics """
-    print("File size: {}".format(file_size))
-    for key in sorted(status.keys()):
-        if status[key]:
-            print("{}: {}".format(key, status[key]))
-
-
-def is_formatted():
-    """ Checks if a line is formatted correctly """
-    # check the format <IP Address> - [<date>] "GET /projects/260 HTTP/1.1"
-    # <status code> <file size>
-    if len(split) != 9:
-        return False
-
-    # check the IP Address
-    if len(split[0].split('.')) != 4:
-        return False
-    for num in split[0].split('.'):
-        if not num.isdigit():
-            return False
-        if int(num) < 0 or int(num) > 255:
-            return False
-
-    # check the status code
-    if not split[-2].isdigit():
-        return False
-
-    # check the file size
-    if not split[-1].isdigit():
-        return False
-    if int(split[-1]) < 0:
-        return False
-
-    return True
-
-
-if __name__ == "__main__":
+try:
     for line in sys.stdin:
-        if count == 10:
-            print_stats()
-            count = 1
-        else:
-            count += 1
+        nb_line_read += 1
 
-        split = line.split()
-        if not is_formatted():
-            continue
+        try:
+            splited_line = line.split()
+            # get sum of size
+            size_line = int(splited_line[-1])
+            total_size += size_line
 
-        file_size += int(split[-1])
-        status[split[-2]] += 1
+            # get status code
+            status_code_line = int(splited_line[-2])
 
-    print_stats()
+            if status_code_line not in status_code_dict.keys():
+                pass
+            for status_code in sorted(status_code_dict):
+                if status_code_line == status_code:
+                    status_code_dict[status_code_line] += 1
+
+        except ValueError:
+            pass
+
+        if nb_line_read % 10 == 0:
+            print("File size: {}".format(total_size))
+            for status_code in sorted(status_code_dict):
+                if status_code_dict[status_code] != 0:
+                    print("{}: {}".format(status_code,
+                                          status_code_dict[status_code]))
+
+except KeyboardInterrupt:
+    pass
+
+print("File size: {}".format(total_size))
+for status_code in sorted(status_code_dict):
+    if status_code_dict[status_code] != 0:
+        print("{}: {}".format(status_code,
+                              status_code_dict[status_code]))
