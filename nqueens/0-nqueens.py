@@ -14,6 +14,7 @@ def place_nqueens(n, row, solutions):
             if abs(column - solution[1]) == abs(row - solution[0]):
                 queen = 1
                 break
+
             if column == solution[1]:
                 queen = 1
                 break
