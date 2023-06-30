@@ -7,7 +7,7 @@
  * @array: Pointer to the first element of the array to be converted
  * @size: Number of element in the array
  *
- * Return: Pointer to the root node of the created AVL tree, or NULL on failure
+ * Return: Pointer to the root node of the created AVL tree, or NULL on fail
  */
 avl_t *sorted_array_to_avl(int *array, size_t size)
 {
