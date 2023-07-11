@@ -17,8 +17,6 @@ request(url, async (error, response, body) => {
 
   const characters = JSON.parse(body).characters;
 
-  console.log(characters);
-
   for await (const character of characters) {
     const name = await new Promise((resolve, reject) => {
       request(character, (error, response, body) => {
