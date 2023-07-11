@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 
 /*
 JavaScript script that prints all characters of a Star Wars movie
@@ -13,18 +13,21 @@ const movieId = process.argv[2];
 const url = 'https://swapi-api.hbtn.io/api/films/' + movieId;
 
 request(url, async (error, response, body) => {
-    if (error) { console.log(error); }
+  if (error) { console.log(error); }
 
-    const characters = JSON.parse(body).characters;
+  const characters = JSON.parse(body).characters;
 
-    for (const character in characters) {
-        const urlChar = await characters[character];
+  console.log(characters);
 
-        request(urlChar, async (error, response, body) => {
-            if (error) { console.log(error); }
+  for await (const character of characters) {
+    const name = await new Promise((resolve, reject) => {
+      request(character, (error, response, body) => {
+        if (error) { reject(error); }
 
-            const name = await JSON.parse(body).name;
-            console.log(name);
-        });
-    }
+        resolve(JSON.parse(body).name);
+      });
+    });
+
+    console.log(name);
+  }
 });
