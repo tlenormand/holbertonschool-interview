@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/node
 
 /*
 JavaScript script that prints all characters of a Star Wars movie
