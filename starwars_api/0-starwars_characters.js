@@ -12,20 +12,19 @@ const movieId = process.argv[2];
 // Request URL
 const url = 'https://swapi-api.hbtn.io/api/films/' + movieId;
 
-request(url, function (error, response, body) {
-    if (error) {
-        console.log(error);
-    } else {
-        const characters = JSON.parse(body).characters;
+request(url, async (error, response, body) => {
+    if (error) { console.log(error); }
 
-        for (const character of characters) {
-            request(character, function (error, response, body) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log(JSON.parse(body).name);
-                }
-            });
-        }
+    const characters = JSON.parse(body).characters;
+
+    for (const character in characters) {
+        const urlChar = await characters[character];
+
+        request(urlChar, async (error, response, body) => {
+            if (error) { console.log(error); }
+
+            const name = await JSON.parse(body).name;
+            console.log(name);
+        });
     }
 });
