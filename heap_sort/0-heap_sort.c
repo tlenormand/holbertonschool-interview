@@ -38,10 +38,10 @@ void swap(int *a, int *b, int *array, int lenght_array)
 {
 	int temp = *a;
 
-	print_array(array, lenght_array);
-
 	*a = *b;
 	*b = temp;
+
+	print_array(array, lenght_array);
 }
 
 /**
