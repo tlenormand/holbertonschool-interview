@@ -13,16 +13,16 @@ void heap_sort(int *array, size_t size)
 	int i;
 	int lenght_array = size;
 
-	if (array == NULL || size == 0)
-		return;
-
-	for (i = size / 2 - 1; i >= 0; i--)
-		heapify(array, size, i, lenght_array);
-
-	for (i = size - 1; i >= 0; i--)
+	if (array != NULL && size != 0)
 	{
-		swap(&array[0], &array[i], array, lenght_array);
-		heapify(array, i, 0, lenght_array);
+		for (i = size / 2 - 1; i >= 0; i--)
+			heapify(array, size, i, lenght_array);
+
+		for (i = size - 1; i >= 0; i--)
+		{
+			swap(&array[0], &array[i], array, lenght_array);
+			heapify(array, i, 0, lenght_array);
+		}
 	}
 }
 
@@ -38,10 +38,9 @@ void swap(int *a, int *b, int *array, int lenght_array)
 {
 	int temp = *a;
 
+	print_array(array, lenght_array);
 	*a = *b;
 	*b = temp;
-
-	print_array(array, lenght_array);
 }
 
 /**
