@@ -22,12 +22,13 @@ def makeChange(coins, total):
     for coin in coins:
         if total <= 0:
             break
+
         num_coins += total // coin
         total = total % coin
 
     if total != 0:
         return -1
-    
+
     if num_coins == 20:
         return 5
 
