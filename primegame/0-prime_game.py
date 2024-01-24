@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Module for Prime Game """
 
+__doc__ = "Prime Game"
+
 
 def isWinner(x, nums):
     """Solves Prime Game"""
